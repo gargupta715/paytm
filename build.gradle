@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.3.0.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudVersion', "Hoxton.SR8")
+}
+
+apply plugin: "io.spring.dependency-management"
+
+// to maintain version of all dependencies of spring
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    // for JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // for web rest api methods like get put post
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    runtimeOnly "com.h2database:h2"
+
+    // for test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
